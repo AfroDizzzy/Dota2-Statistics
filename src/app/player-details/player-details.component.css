@@ -1,0 +1,92 @@
+img {
+    border-radius: 50%;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-cell {
+  color: white;
+  background-color: grey;
+}
+
+.mat-header-cell{
+  background-color: darkslategrey;
+  color: white;
+}
+
+/* th, td {
+  width: 100px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+} 
+
+.mat-column-winner{
+  width: auto;
+}
+*/
+
+button{
+  color:white;
+  border-color: grey;
+  background-color: darkslategrey;
+  display: inline-block
+}
+
+.mat-card{
+  color:white;
+  background-color: darkslategrey;
+}
+
+/* styling for buttons */
+.customButton { 
+  color: #FFFFFF; 
+  background-color: #2F4F4F; 
+  border-color: #000000; 
+} 
+ 
+.customButton:hover, 
+.customButton:focus, 
+.customButton:active, 
+.customButton.active, 
+.open .dropdown-toggle.customButton { 
+  color: #FFFFFF; 
+  background-color: #49247A; 
+  border-color: #000000; 
+} 
+ 
+.customButton:active, 
+.customButton.active, 
+.open .dropdown-toggle.customButton { 
+  background-image: none; 
+} 
+ 
+.customButton.disabled, 
+.customButton[disabled], 
+fieldset[disabled] .customButton, 
+.customButton.disabled:hover, 
+.customButton[disabled]:hover, 
+fieldset[disabled] .customButton:hover, 
+.customButton.disabled:focus, 
+.customButton[disabled]:focus, 
+fieldset[disabled] .customButton:focus, 
+.customButton.disabled:active, 
+.customButton[disabled]:active, 
+fieldset[disabled] .customButton:active, 
+.customButton.disabled.active, 
+.customButton[disabled].active, 
+fieldset[disabled] .customButton.active { 
+  background-color: #2F4F4F; 
+  border-color: #000000; 
+} 
+ 
+.customButton .badge { 
+  color: #2F4F4F; 
+  background-color: #FFFFFF; 
+}

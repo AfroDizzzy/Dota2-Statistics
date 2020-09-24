@@ -1,0 +1,15 @@
+{
+  "serverless": {
+    "provider": "aws",
+    "project": "dota2",
+    "skipInstall": false,
+    "directory": ".",
+    "lambdaTS": false,
+    "offline": false,
+    "clientProject": "dota2",
+    "serverless": {
+      "aws": {},
+      "gcloud": {}
+    }
+  }
+}
