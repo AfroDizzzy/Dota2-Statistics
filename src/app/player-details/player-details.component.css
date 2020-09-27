@@ -1,3 +1,5 @@
+
+
 img {
     border-radius: 50%;
 }
@@ -36,13 +38,18 @@ button{
   color:white;
   border-color: grey;
   background-color: darkslategrey;
-  display: inline-block
+  display: inline-block;
+  
 }
 
 .mat-card{
   color:white;
   background-color: darkslategrey;
+  border-radius: 0px;
+  
 }
+
+
 
 /* styling for buttons */
 .customButton { 
