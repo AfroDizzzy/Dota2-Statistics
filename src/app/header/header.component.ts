@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   title = 'DotA 2 Statistics';
   constructor() { }
+  isCollapsed = true;
 
   ngOnInit(): void {
   }

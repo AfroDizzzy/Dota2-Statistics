@@ -1,12 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-light" >
     <a class="navbar-brand" href="#" routerLink="/home-message">{{title}}</a>
-    <button class="navbar-toggler" type="button" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+    <button class="navbar-toggler" type="button" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+
+    <div class="collapse navbar-collapse" id="navbarNav" [ngbCollapse]="isCollapsed">
+      <ul class="navbar-nav ">
         <!-- button to search for player -->
-        <li class="nav-item">
+        <li class="nav-item active">
           <a class="nav-link" routerLink="/player-details">Player Search</a>
         </li>
         <!-- Button to search for match TO BE ADDED LATER -->
@@ -16,4 +18,4 @@
       </ul>
     </div>
 </nav>
-  
+ 
