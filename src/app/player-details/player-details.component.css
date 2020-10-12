@@ -1,5 +1,11 @@
 
+.example-section {
+  margin: 12px 0;
+}
 
+.example-margin {
+  margin: 0 12px;
+}
 img {
     border-radius: 50%;
 }
@@ -50,16 +56,20 @@ button{
 }
 
 
+.graphButtonsContainer{
+  padding: 10px;
+}
 
-/* styling for buttons */
+.customGraphButton{
+  margin-top:10px;
+}
+
+/* styling for custom buttons */
 .customButton { 
   color: #FFFFFF; 
   background-color: #2F4F4F; 
   border-color: #000000; 
-}
-
-.pad{
-  padding: 10px
+  
 }
  
 .customButton:hover, 

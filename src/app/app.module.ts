@@ -19,6 +19,11 @@ import {MatInputModule} from '@angular/material/input';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartsModule } from 'ng2-charts';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
 
 
 @NgModule({
@@ -39,7 +44,11 @@ import { ChartsModule } from 'ng2-charts';
     FormsModule, 
     HttpClientModule, 
     BrowserAnimationsModule,
-    ChartsModule
+    ChartsModule,
+    NgbModule,
+    NgbCollapseModule,
+    MatExpansionModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

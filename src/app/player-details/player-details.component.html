@@ -43,34 +43,69 @@
 </div>
 
 
-<div class="container pad"  *ngIf="display">
+
+
+
+<div class="container graphButtonsContainer"  *ngIf="display">
   <div class="row">
     <div class="col">
       <button type="button" class="btn customButton btn-lg btn-block" (click)="versesStartTime()">Winrate vs Start Time</button>
     </div>
+
     <div class="col">
       <button type="button" class="btn customButton btn-lg btn-block" (click)="versesDay()">Winrate vs Day</button>
     </div>  
+    
     <div class="col">
       <button type="button" class="btn customButton btn-lg btn-block" (click)="versesTeam()">Winrate vs Team</button>
     </div>
-    <div class="col">
-      <button type="button" class="btn customButton btn-lg btn-block">Custom Graph</button>
-      <!-- Gotta add trigger to show graph selection area -->
-    </div>
+  </div>
+  <div class = "row customGraphButton">  
+    <button type="button" class="btn customButton btn-lg btn-block" (click)="customGraph()">Custom Graph</button>
+  </div>
+</div>
+
+
+<div *ngIf="displayCustomGraph" class="customGraph"  align="center">
+  <section class="example-section">
+    <mat-checkbox class="example-margin" [checked]="consoleX()">Check me!</mat-checkbox>
+    <mat-checkbox class="example-margin" [disabled]="true">Disabled</mat-checkbox>
+  </section>
+
+  <section class="example-section">
+    <span class="example-list-section">
+      <ul *ngFor="let data of matchSource">
+      <mat-checkbox class="example-margin"
+                    [checked]="consoleX()"
+                    [indeterminate]="customGraph()"
+                    >
+                    {{data}}
+      </mat-checkbox>
+    </ul>
+    </span>
+  </section>
+  <div class="chart-wrapper">
+    <canvas baseChart 
+    [datasets]="barChartObjectStartTime.barChartData"
+    [labels]="barChartObjectStartTime.barChartLabels"
+    [options]="barChartObjectStartTime.barChartOptions"
+    [plugins]="barChartObjectStartTime.barChartPlugins"
+    [legend]="barChartObjectStartTime.barChartLegend"
+    [chartType]="barChartObjectStartTime.barChartType">
+    </canvas>
   </div>
 </div>
 
 <div *ngIf="displayVersesStartTime"> 
-    <div class="chart-wrapper">
-      <canvas baseChart 
-      [datasets]="barChartObjectStartTime.barChartData"
-      [labels]="barChartObjectStartTime.barChartLabels"
-      [options]="barChartObjectStartTime.barChartOptions"
-      [plugins]="barChartObjectStartTime.barChartPlugins"
-      [legend]="barChartObjectStartTime.barChartLegend"
-      [chartType]="barChartObjectStartTime.barChartType">
-      </canvas>
+  <div class="chart-wrapper">
+    <canvas baseChart 
+    [datasets]="barChartObjectStartTime.barChartData"
+    [labels]="barChartObjectStartTime.barChartLabels"
+    [options]="barChartObjectStartTime.barChartOptions"
+    [plugins]="barChartObjectStartTime.barChartPlugins"
+    [legend]="barChartObjectStartTime.barChartLegend"
+    [chartType]="barChartObjectStartTime.barChartType">
+    </canvas>
   </div>
 </div>
 
@@ -99,6 +134,8 @@
     </canvas>
   </div>
 </div>
+
+
 
 <!-- displays the table data  -->
 <mat-form-field *ngIf="display">

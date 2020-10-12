@@ -7,12 +7,49 @@ import {MatTableDataSource} from '@angular/material/table';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
 
+
+class chart2 {
+  barChartOptions;
+  barChartLabels;
+  barChartType;
+  barChartLegend;
+  barChartPlugins;
+  barChartData;
+
+  constructor (x:any) {
+    this.barChartOptions = {responsive: true} as ChartOptions;
+    this.barChartLabels = x as Label[];
+    this.barChartType = 'bar' as ChartType;
+    this.barChartLegend = true;
+    this.barChartPlugins = [];
+    this.barChartData = [
+      {barPercentage: 1, data: [], label: 'Wins' },
+      {data:[], label: 'Loses'}
+    ] as ChartDataSets[];
+  }   
+}
+
+
 @Component({
   selector: 'app-player-details',
   templateUrl: './player-details.component.html',
   styleUrls: ['./player-details.component.css']
 })
+
 export class PlayerDetailsComponent implements OnInit {
+  constructor(private http: HttpClient,
+    private route: ActivatedRoute,
+    private location: Location) {}
+
+   ngOnInit() {
+
+    // on start up of the component it will search for the profile
+    this.route.queryParams.subscribe(params => {
+      this.playerId = params['playerIdentity'];
+      this.getRouteId();
+    });
+    this.getHeroData();
+  }
   // general variables
   playerId: string;
   playerResult: any;
@@ -22,7 +59,11 @@ export class PlayerDetailsComponent implements OnInit {
   displayVersesStartTime = false;
   displayVersesDay = false;
   displayVersesTeam = false; 
-  display; 
+  displayCustomGraph = false;
+  display;
+  
+  duration = [0,5,10,15,20,25,30,35,40,45,50,60]
+  dataTypes = [this.duration]; 
 
   gameModeID = {
     0: "Unknown",
@@ -53,7 +94,7 @@ export class PlayerDetailsComponent implements OnInit {
   }
   //variables for barcharts
   barChartObjectStartTime = {
-     barChartOptions: {
+    barChartOptions: {
       responsive: true} as ChartOptions,
     barChartLabels: this.starttime() as Label[] ,
     barChartType: 'bar' as ChartType,
@@ -68,47 +109,35 @@ export class PlayerDetailsComponent implements OnInit {
   barChartObjectDay = {
     barChartOptions: {
      responsive: true} as ChartOptions,
-   barChartLabels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as Label[] ,
-   barChartType: 'bar' as ChartType,
-   barChartLegend: true,
-   barChartPlugins: [],
-   barChartData: [
+    barChartLabels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as Label[] ,
+    barChartType: 'bar' as ChartType,
+    barChartLegend: true,
+    barChartPlugins: [],
+    barChartData: [
      {barPercentage: 1, data: [], label: 'Wins' },
      {data:[], label: 'Loses'}
-   ] as ChartDataSets[]  
- }
-
- barChartObjectTeam = {
-  barChartOptions: {
-   responsive: true} as ChartOptions,
- barChartLabels: ["Radient", "Dire"] as Label[] ,
- barChartType: 'bar' as ChartType,
- barChartLegend: true,
- barChartPlugins: [],
- barChartData: [
-   {barPercentage: 1, data: [], label: 'Wins' },
-   {data:[], label: 'Loses'}
- ] as ChartDataSets[]  
-}
-
+    ] as ChartDataSets[]  
+  }
+  
+  barChartObjectTeam = {
+    barChartOptions: {
+      responsive: true} as ChartOptions,
+      barChartLabels: ["Radient", "Dire"] as Label[] ,
+      barChartType: 'bar' as ChartType,
+      barChartLegend: true,
+      barChartPlugins: [],
+      barChartData: [
+        {barPercentage: 1, data: [], label: 'Wins' },
+        {data:[], label: 'Loses'}
+      ] as ChartDataSets[]  
+  }
+  
+  barChartObject = new chart2(this.starttime());
+  
   //variables used by angular mat table
   matchDataTable = [];
   matchSource: any; 
   matchTableColumns:any;
-
-  constructor(private http: HttpClient,
-    private route: ActivatedRoute,
-    private location: Location) {}
-
-   ngOnInit() {
-
-    // on start up of the component it will search for the profile
-    this.route.queryParams.subscribe(params => {
-      this.playerId = params['playerIdentity'];
-      this.getRouteId();
-    });
-    this.getHeroData();
-  }
 
   getRouteId() {
     const routeId = +this.route.snapshot.paramMap.get('id');
@@ -144,7 +173,7 @@ export class PlayerDetailsComponent implements OnInit {
     });
     this.chartStartTimeData(this.matchDataTable, this.playerMatches);
     this.chartDayData(this.matchDataTable);
-    this.chartTeamData(this.matchDataTable);
+    this.chartTeam(this.matchDataTable);
   }
 
   //Retrives data on all current heroes in dota2 from the api
@@ -326,21 +355,34 @@ export class PlayerDetailsComponent implements OnInit {
 
   //toggles the respective tables and loads the table data 
   versesStartTime(){
-    this.displayVersesStartTime = true; 
+    this.displayVersesStartTime = !this.displayVersesStartTime; 
     this.displayVersesDay = false;
     this.displayVersesTeam = false;
+    this.displayCustomGraph = false;
   }
 
   versesDay(){
     this.displayVersesStartTime = false; 
-    this.displayVersesDay = true;
+    this.displayVersesDay = !this.displayVersesDay;
     this.displayVersesTeam = false; 
- }
+    this.displayCustomGraph = false;
+  }
+ consoleX(){
+  console.log(this.matchSource);
+  };
 
   versesTeam(){
     this.displayVersesStartTime = false; 
     this.displayVersesDay = false;
-    this.displayVersesTeam = true;  
+    this.displayVersesTeam = !this.displayVersesTeam;  
+    this.displayCustomGraph = false;
+  }
+
+  customGraph(){
+    this.displayVersesStartTime = false; 
+    this.displayVersesDay = false;
+    this.displayVersesTeam = false; 
+    this.displayCustomGraph = !this.displayCustomGraph;
   }
 
   //builds array for time
@@ -398,35 +440,47 @@ export class PlayerDetailsComponent implements OnInit {
 
     }
   }
+  
 
-  chartTeamData(matchdatatable){
+  teamCheckRadiant(matchdatatable){
 
-      let positive = 0;
-      let negative = 0;
-      let p2 = 0;
-      let n2 = 0;
+    let outcomeRadiant = {winner: 0, loser: 0} ;
 
-      for(let i = 0; i < matchdatatable.length; i ++ ){ 
-         if((matchdatatable[i].winner == "Winner") && (matchdatatable[i].player_side == "Radiant")){
-          positive ++;
-         }
-         if((matchdatatable[i].winner == "Loser") && (matchdatatable[i].player_side == "Radiant")){
-          negative --;
-        }
+    for(let i = 0; i < matchdatatable.length; i ++ ){ 
+      if((matchdatatable[i].winner == "Winner") && (matchdatatable[i].player_side == "Radiant")){
+        outcomeRadiant.winner ++;
       }
-      this.barChartObjectTeam.barChartData[0].data[0]=positive;
-      this.barChartObjectTeam.barChartData[1].data[0]=negative;
-
-      for(let i = 0; i < matchdatatable.length; i ++ ){ 
-         if((matchdatatable[i].winner == "Winner") && (matchdatatable[i].player_side == "Dire")){
-          p2 ++;
-         }
-         if((matchdatatable[i].winner == "Loser") && (matchdatatable[i].player_side == "Dire")){
-          n2 --;
-        }
+      if((matchdatatable[i].winner == "Loser") && (matchdatatable[i].player_side == "Radiant")){
+        outcomeRadiant.loser --;
       }
-      this.barChartObjectTeam.barChartData[0].data[1]=p2;
-      this.barChartObjectTeam.barChartData[1].data[1]=n2;
-
     }
+
+    return outcomeRadiant;
+  }
+
+  teamCheckDire(matchdatatable){
+    let outcomeDire = {winner: 0, loser: 0};
+
+    for(let i = 0; i < matchdatatable.length; i ++ ){ 
+      if((matchdatatable[i].winner == "Winner") && (matchdatatable[i].player_side == "Dire")){
+       outcomeDire.winner ++;
+      }
+      if((matchdatatable[i].winner == "Loser") && (matchdatatable[i].player_side == "Dire")){
+        outcomeDire.loser --;
+      }
+    }
+
+    return outcomeDire;
+  }
+
+  chartTeam(matchdatatable){
+    let radiantData = this.teamCheckRadiant(matchdatatable);
+    let direData = this.teamCheckDire(matchdatatable); 
+
+    this.barChartObjectTeam.barChartData[0].data[0] = radiantData.winner;
+    this.barChartObjectTeam.barChartData[1].data[0] = radiantData.loser;
+
+    this.barChartObjectTeam.barChartData[0].data[1] = direData.winner;
+    this.barChartObjectTeam.barChartData[1].data[1] = direData.loser;
+  }
 }
